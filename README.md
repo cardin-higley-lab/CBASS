@@ -4,16 +4,16 @@
 ![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue)
 ![Matlab Versions](https://img.shields.io/badge/MATLAB-2018%7C2019%7C2020-blue.svg?style=flat-square)
 
-__CBASS__ stands for _**C**lustering **B**and-limited **A**ctivity by **S**tate and **S**pectro-temporal features_. It is a method designed to detect recurring spatio-temporal motifs in multi-channel time series. Motifs must have energy in a specified frequency band and their occurence must increase during specific epochs of the recording (i.e. state). The method was originally developed to analyze multichannel Local Field Potentials but can be applied to any time series in principle. A detailed description of the algorithm can be found in the [wiki](https://github.com/ahof1704/gamma_bouts/wiki)
+__CBASS__ stands for _**C**lustering **B**and-limited **A**ctivity by **S**tate and **S**pectro-temporal features_. It is a method designed to detect recurring spatio-temporal motifs in multi-channel time series. Motifs must have energy in a specified frequency band and their occurence must increase during specific epochs of the recording (i.e. state). The method was originally developed to analyze multichannel Local Field Potentials but can be applied to any time series in principle. A detailed description of the algorithm can be found in the [wiki](https://github.com/cardin-higley-lab/CBASS/wiki)
 
-CBASS is primarily implemented in Matlab. Optional plotting routines use python.
+CBASS is implemented in Matlab and Python.
 
 ## Code organization
-The code is organized in 4 folders:
-1. ***Demo*** contains Matlab script showing exemples of how to run CBASS from the Matlab command line or from a bash script. These scripts are meant to be edited and modified to the convenience of the user.
-2. ***Figures*** contains Matlab scripts generating the figures shown in the [wiki](https://github.com/ahof1704/gamma_bouts/wiki). These script operate on test data that can be downloaded [here](https://osf.io/3k7a5/?view_only=bbcb6ac653d041fab0bd1618301cab30).
-3. ***Pipeline*** contains the core Matlab and Python functions implementing CBASS as well as a number of utilities. This part of the code is meant to be copied and edited by users wishing to modify the method or reuse some of its part.
-4. ***Tests*** contains test scripts that were generated during the development of the method kept here for record. Users are welcome to explore it if they have time to loose.
+Matlab and and Python implementations are contained in their respective folder. In each the code is organized in 2 main folders:
+1. ***Demo*** contains script showing exemples of how to run CBASS from the command line or from a bash script. These scripts are meant to be edited and modified to the convenience of the user.
+2. ***Pipeline*** contains the core functions implementing CBASS as well as a number of utilities. This part of the code is meant to be copied and edited by users wishing to modify the method or reuse some of its part.
+
+The matlab version contains an additional folder: ***Figures*** containing Matlab scripts generating the figures shown in the [wiki](https://github.com/ahof1704/gamma_bouts/wiki). These script operate on test data that can be downloaded [here](https://osf.io/3k7a5/?view_only=bbcb6ac653d041fab0bd1618301cab30).
 
 ## Link to download example data
 The example data can be downloaded from OSF [here](https://osf.io/3k7a5/?view_only=bbcb6ac653d041fab0bd1618301cab30)
@@ -23,9 +23,10 @@ The example data can be downloaded from OSF [here](https://osf.io/3k7a5/?view_on
 2. (_optional_) Plotting some optional plots uses [PHATE](https://github.com/KrishnaswamyLab/PHATE) or [UMAP](https://umap-learn.readthedocs.io/en/latest/). CBASS uses their implememtation in python. Installation can be found bellow.
 
 ## Getting started
+### Matalb
 1. Make a copy of the CBASS directory and it to your Matlab path   `addpath(genpath( path_to_CBASS ))`.
-2. The function *CBASS_Main_DetectEnrichedMotif* encapsulate the whole pipeline. A Demonstration of how to run *CBASS_Main_DetectEnrichedMotif* can be found in the demo script *CBASS_Call_Main__Template.m* in the [Demo](https://github.com/ahof1704/gamma_bouts/edit/master/Demo) folder. Make a copy of this script and modify it to load your data and reflect your local path.
-3. The source code for *CBASS_Main_DetectEnrichedMotif* can be found in the [Pipeline](https://github.com/ahof1704/gamma_bouts/edit/master/Pipeline) folder. The help section gives a detailed description its input, output and of the sufunctions implementing the different levels of the pipeline. Subfunctions also have a detailed help. Read and hack as needed.
+2. The function *CBASS_Main_DetectEvents* encapsulate the whole pipeline. A Demonstration of how to run *CBASS_Main_DetectEnrichedMotif* can be found in the demo script *CBASS_Call_Main__Template.m* in the [Demo](https://github.com/cardin-higley-lab/CBASS/edit/master/matlab/Demo) folder. Make a copy of this script and modify it to load your data and reflect your local path.
+3. The source code for *CBASS_Main_DetectEnrichedMotif* can be found in the [Pipeline](https://github.com/cardin-higley-lab/CBASS/edit/master/matlab/Pipeline) folder. The help section gives a detailed description its input, output and of the sufunctions implementing the different levels of the pipeline. Subfunctions also have a detailed help. Read and hack as needed.
 
 ## Setting up conda environment for optional plot
 ### Replicating our environment
