@@ -4,7 +4,7 @@
 ![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue)
 ![Matlab Versions](https://img.shields.io/badge/MATLAB-2018%7C2019%7C2020-blue.svg?style=flat-square)
 
-__CBASS__ stands for _**CL**ustering of **A**ctivity **M**otifs by **S**tate_. It is a method designed to detect recurring spatio-temporal motifs in multi-channel time series. Motifs must have energy in a specified frequency band and their occurence must increase during specific epochs of the recording (i.e. state). The method was originally developed to analyze multichannel Local Field Potentials but can be applied to any time series in principle. A detailed description of the algorithm can be found in the [wiki](https://github.com/ahof1704/gamma_bouts/wiki)
+__CBASS__ stands for _**C**lustering **B**and-limited **A**ctivity by **S**tate and **S**pectro-temporal features_. It is a method designed to detect recurring spatio-temporal motifs in multi-channel time series. Motifs must have energy in a specified frequency band and their occurence must increase during specific epochs of the recording (i.e. state). The method was originally developed to analyze multichannel Local Field Potentials but can be applied to any time series in principle. A detailed description of the algorithm can be found in the [wiki](https://github.com/ahof1704/gamma_bouts/wiki)
 
 CBASS is primarily implemented in Matlab. Optional plotting routines use python.
 
