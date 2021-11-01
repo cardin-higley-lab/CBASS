@@ -1,0 +1,23 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+root_path =
+    '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/Figures_and_Sandbox'
+cBAND_LABEL =
+    'Gamma'
+cBAND =
+    30    80
+cSTATE_LBL =
+    'Stim'
+cFORMAT =
+    'polar'
+bl1ZScore =
+  logical
+   0

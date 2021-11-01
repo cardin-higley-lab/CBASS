@@ -1,0 +1,30 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+root_path =
+    '/home/ahf38/Documents/gamma_bouts/Demo'
+cBAND_LABEL =
+    'Gamma'
+cBAND =
+    30    80
+cSTATE_LBL =
+    'Stim'
+cFORMAT =
+    'polar'
+bl1ZScore =
+  logical
+   0
+sOPTION = 
+  struct with fields:
+
+    cBAND_LABEL: 'Gamma'
+     cSTATE_LBL: 'Stim'
+File name: Example_1_Gamma_Stim_polar
+---->> Compute phase randomized signal ... Done------ 30-80Hz ------------------------------->> Extract hilbert troughs ... Done---->> Compute filters ... ------ 20 CLUSTERS ---------------------------Cluster 10 (N = 16370):	Rate: 0.0296	Dev: -0.013	(p = 0.0000)	SIGCluster 15 (N = 17582):	Rate: 0.0305	Dev: -0.012	(p = 0.0000)	SIGCluster 12 (N = 16035):	Rate: 0.0319	Dev: -0.011	(p = 0.0000)	SIGCluster  2 (N = 17407):	Rate: 0.0329	Dev: -0.010	(p = 0.0000)	SIGCluster  8 (N = 11579):	Rate: 0.0349	Dev: -0.008	(p = 0.0000)	SIGCluster 20 (N = 18771):	Rate: 0.0367	Dev: -0.006	(p = 0.0000)	SIGCluster  7 (N = 15981):	Rate: 0.0392	Dev: -0.004	(p = 0.0273)	NON SIGCluster 13 (N = 12117):	Rate: 0.0401	Dev: -0.003	(p = 0.1580)	NON SIGCluster 16 (N = 17395):	Rate: 0.0429	Dev: 0.000	(p = 0.8751)	NON SIGCluster 19 (N = 12633):	Rate: 0.0437	Dev: 0.001	(p = 0.5810)	NON SIGCluster 17 (N = 11928):	Rate: 0.0451	Dev: 0.002	(p = 0.1945)	NON SIGCluster  3 (N = 11576):	Rate: 0.0460	Dev: 0.003	(p = 0.0754)	NON SIGCluster 14 (N = 8330):	Rate: 0.0472	Dev: 0.004	(p = 0.0433)	NON SIGCluster 11 (N = 6888):	Rate: 0.0483	Dev: 0.006	(p = 0.0205)	NON SIGCluster  4 (N = 11027):	Rate: 0.0485	Dev: 0.006	(p = 0.0025)	NON SIGCluster  1 (N = 11110):	Rate: 0.0508	Dev: 0.008	(p = 0.0000)	SIGCluster  5 (N = 13478):	Rate: 0.0568	Dev: 0.014	(p = 0.0000)	SIGCluster  9 (N = 8851):	Rate: 0.0574	Dev: 0.015	(p = 0.0000)	SIGCluster  6 (N = 11903):	Rate: 0.0585	Dev: 0.016	(p = 0.0000)	SIGCluster 18 (N = 12303):	Rate: 0.0624	Dev: 0.020	(p = 0.0000)	SIG------ 1 FILTER ---------------------------Region  1 (N = 57645):	Rate: 0.0573	Dev: 0.015	(p = 0.0000)---->> Detect pulses ... Done
