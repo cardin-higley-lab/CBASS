@@ -14,7 +14,7 @@ chDir       = fullfile(chPath, chExperiment);
 addpath(genpath(chPath)); %Add the root folder to current folder
 
 % Loads the data
-sREC        = CBASS_L0_LoadData(chDir);
+sREC        = CBASS_L0_LoadData(chInDir);
 sREC        = CBASS_L1_AddPhaseRandomizedSignal(sREC);
 
 %% Address for the output ----- comment to provide externally throug a system call ---------------------

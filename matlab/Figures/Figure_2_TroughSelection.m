@@ -1,20 +1,26 @@
 %% Loads data
 clear, close all
-cEXP = {'Example_1', 'Example_2'};
-iExp = 2;
-chExperiment = cEXP{iExp};
-chPath      = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/'; 
-chDir = fullfile(chPath,'Data', chExperiment);
-% chPath      = 'D:\gamma_bouts\';
-chDir       = fullfile(chPath, chExperiment);
-chOutPath   = fullfile(chPath, 'Figures', 'Figure_2_TroughSelection');
-addpath(genpath(chPath)); %Add the root folder to current folder
+
+%Adds CBASS to the path
+chCBASSDir  = 'D:\CBASS\matlab\';
+addpath(genpath(chCBASSDir)); %Add the root folder to current folder
+
+%Sets path to the data
+% chDataDir   = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/data';
+chDataDir   = 'D:\gamma_bouts\';
+cEXP        = {'Example_1', 'Example_2'};
+iExp        = 2;
+chDataPath  = fullfile(chDataDir, cEXP{iExp});
+
+%Sets the output path
+chOutDir    = 'D:\CBASS\matlab\Figures';
+chOutPath   = fullfile(chOutDir, 'Figure_2_TroughSelection');
 
 %Create output folder if doens't exist
 if ~exist(chOutPath, 'dir'), mkdir(chOutPath), end
 
 % Loads the data
-sREC    = CBASS_L0_LoadData(chDir);
+sREC    = CBASS_L0_LoadData(chDataPath);
 % sREC    = CBASS_L1_AddPhaseRandomizedSignal(sREC);
 %% Sets general parameter
 % Sets the band and the state of interest
