@@ -8,8 +8,8 @@ addpath(genpath(chCodePath)); %Add the root folder to current folder
 % matrix) and its sample rate inSample rate
 
 % Path to the data
-% chDataPath      = 'D:\gamma_bouts\';
-chDataPath      = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/Data'; % root directory
+chDataPath      = 'D:\gamma_bouts\';
+% chDataPath      = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/Data'; % root directory
 chExperiment    = 'Example_1';
 chExpPath       = fullfile(chDataPath, chExperiment);
 

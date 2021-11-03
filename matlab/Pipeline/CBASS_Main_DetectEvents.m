@@ -84,8 +84,8 @@ function [sFREQ_BAND, cTROUGH, cTRGH_RND] = ...
 %   .dbPValThr      p-value for the significance of the partition.
 %                   Calculated as the proportion of db1ScoreRnd above
 %                   dbThreshold
-%   .bl1Partition   a logical vector indexing the trough used to compute 
-%                   the template motif
+%   .bl1Partition   a logical vector indexing the trough retained as final
+%                   events
 %   .bl1Event       a boolean, having as many elements as time samples in
 %                   db2LFP, indexing significant event of state
 %                   enriched band specific activity. <---  FINAL OUTPUT
@@ -133,8 +133,7 @@ if sOPTION.blVerbose, fprintf('Done\n'); end
 
     %Initializes the output structure
 inNBnd = length(cBAND); 
-sFREQ_BAND = struct('db1Band', cell(1, inNBnd), 'chBandLabel', cell(1, inNBnd), ...
-    'in1TroughIdx', cell(1, inNBnd), 'sMOTIF', cell(1, inNBnd));
+sFREQ_BAND = struct();
 
     %Initializes the optional output cell arrays
 [cTROUGH, cTRGH_RND] = deal(cell(size(cBAND))); 

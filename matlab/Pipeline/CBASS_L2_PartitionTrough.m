@@ -75,10 +75,8 @@ bl1T_Baseline   = bl1Baseline(sTROUGH.in1Index);
 
 % Computes the estimate of the probability of the state defined by bl1Epoch
 % based on the shape of troughs
-tic
 db1Score        = CBASS_U_EnrichmentScore(db2Data, bl1T_Epoch, ...
     bl1T_Baseline, inNClu, dbSigThrs, inNIter);
-toc;
 
 % Find the threshold that best separates events having low and high
 % probabilities of occuring during bl1Epoch

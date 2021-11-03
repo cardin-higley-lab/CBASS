@@ -1,32 +1,55 @@
-%% Script to plot Figure 1 of the paper
-% This script exemplifies how to process and plot the Figure 1 (methods).
-
 % clear, close all
-%% Loading data ----- change section as needed ----------------------------------------------------------
-cEXP = {'Example_1'};
+%% Adds the code to the path ---------- change to the path to the code on your computer -----------------
+chCodePath      = 'D:\CBASS\matlab\';
+addpath(genpath(chCodePath)); %Add the root folder to current folder
 
-iExp = 1;
-chExperiment = cEXP{iExp};
-% chPath      = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts'; % root directory
-% chDir       = fullfile(chPath,'Data', chExperiment);
-chPath      = 'D:\gamma_bouts\';
-chDir       = fullfile(chPath, chExperiment);
-addpath(genpath(chPath)); %Add the root folder to current folder
+%% Load the data ----- change to load your data --------------------------------------------------------- 
+% The section must output the variable db2LFP (i.e.  a channel x time_sample
+% matrix) and its sample rate inSample rate
+
+% Path to the data
+chDataPath      = 'D:\gamma_bouts\';
+% chDataPath      = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/Data'; % root directory
+chExperiment    = 'Example_1';
+chExpPath       = fullfile(chDataPath, chExperiment);
 
 % Loads the data
-sREC        = CBASS_L0_LoadData(chInDir);
-sREC        = CBASS_L1_AddPhaseRandomizedSignal(sREC);
-
-%% Address for the output ----- comment to provide externally throug a system call ---------------------
-chOutPath   = fullfile(chPath, 'Figures', 'Figure_4_Embedding');
-chTmpPath   = chOutPath;
-chOutFile   = chExperiment;
-
-%Create output folder if doens't exist
-if ~exist(chTmpPath, 'dir'), mkdir(chTmpPath), end
+sREC            = CBASS_L0_LoadData(chExpPath);
+db2LFP          = sREC.db2LFP;
+inSampleRate    = sREC.inSampleRate;
+%% Sets the output folder ----- edit or comment to provide externally throug a system call -------------
+chOutPath   = fullfile('D:\CBASS\matlab\Figures', 'Figure_4_Embedding');
 if ~exist(chOutPath, 'dir'), mkdir(chOutPath), end
+% chOutFile   = chExperiment;
+%% Non optional parameters ----- edit or comment to provide externally throug a system call -------------
+cBAND           = {[30 80]};
+cSTATE          = {sREC.bl1Run};
+%% Optional parameters ----- Uncomment to provide externally through a system call using carrier name -- 
+sOPTION.cBAND_LABEL     = {'Gamma'};  % character array or cell array of labels  for bands in cBAND (i.e. {'Beta', 'Gamma'})
+sOPTION.cSTATE_LBL      = {'Running'};  % character array or cell array of labels  for states in cSTATE (i.e. {'Stim', 'Running'})
+% sOPTION.blVerbose       = true;    % Sets whether to print progress on the screen. Default is true 
 
-%% Sets data formatting and embeding global parameters
+% L1 options for formatting hilbert troughs (Function CBASS_L1_GetTrough)
+% sOPTION.chDataFormat    = 'complex'; % Format of hilbert transform coordinates ('polar' or 'complex' Default is 'complex')
+% sOPTION.inRefChan       = 5;    % Reference channel (Default is the last of row of db2LFP.
+
+% L2 options for the computation of filters (Function CBASS_L2_GetFilters)
+% sOPTION.cBASELINE       = {~sREC.b1lPres ~sREC.bl1Run}; % Baseline state.    
+% sOPTION.blZScore        = true;     % z-score for k-means partitioning. Default is true.
+% sOPTION.inMethod        = 1;     % method for spectral clusering of template. Default is 1.
+% sOPTION.inNClu          = 20;       % number of cluster of k-means partitioning. Default is 20.
+% sOPTION.dbSigThrs       = 10.^-4;    % threshold for enrichment significance. Default is 10.^-4.
+% sOPTION.inNIter         = 1000;   % maximum iteration of k-means partioning. Default is 10000;
+%% Calls main function 
+if ~exist('sOPTION', 'var'), sOPTION = struct; end % Creates sOPTION if it does not exist
+[sFREQ_BAND, cTROUGH] = CBASS_Main_DetectEvents(sREC.db2LFP, sREC.inSampleRate, cBAND, cSTATE, sOPTION);
+
+%% Calls embedding and its plotting 
+
+%Address for the output ----- comment to provide externally throug a system call ---------------------
+% chOutPath   = fullfile(chPath, 'Figures', 'Figure_4_Embedding');
+chTmpPath   = chOutPath;
+
 % Sets the data format
 % chDataFormat    = cFORMAT;
 chDataFormat    = 'complex';
@@ -36,145 +59,63 @@ blZScore        = true;
 if blZScore, chZFlag = 'ZScore'; else, chZFlag = 'Raw'; end
 
 % Sets the embeding of choice for
-chEmbedMethod   = 'umap';
-chMethod = chEmbedMethod;
-inN_Component   = 3;
+chEmbedMethod   = 'pca';
+chMethod        = chEmbedMethod;
+inN_Component   = 2;
+iBnd=1;
+chLabel         = sOPTION.cBAND_LABEL{iBnd};
+chExpLabel      = [chExperiment '_' chLabel '_' chDataFormat '_' chZFlag];
 
+disp('Embedding...')
+[status, commandOut] = CBASS_L2_Embed(cTROUGH{iBnd}, chTmpPath, chOutPath, chExpLabel, ...
+    chEmbedMethod, chDataFormat, blZScore, inN_Component)
 
-%% Set up the loop ----- comment to provide externally throug a system call ---------------------
-cBAND_LABEL = {'Beta', 'Gamma'};
-cSTATE_LBL  = {'Stim', 'Running'};
+% Generates the embeding plots for running and not running
+disp('Plotting embedding')
+in1EmbedLabel   = sREC.bl1Run(cTROUGH{iBnd}.in1Index);
+chLabelTag      = ['all_regions_'  sOPTION.cSTATE_LBL{iBnd}];
+chFormatImg     = 'png';
+chRotate3D      = 'False';
+chAddLegend     = 'False';
+inFontSize      = '12';
+chDiscrete      = 'True';
+[status, commandOut] = CBASS_L2_PlotEmbed(cTROUGH{iBnd}, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
+    chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
 
-% Gets the number of band
-inNBnd      = length(cBAND_LABEL);
+disp('Plotting embedding')
+in1EmbedLabel   = sFREQ_BAND(iBnd).db1Score';
+chLabelTag      = ['probTrough_'  sOPTION.cSTATE_LBL{iBnd}];
+chFormatImg     = 'png';
+chRotate3D      = 'False';
+chAddLegend     = 'False';
+inFontSize      = '12';
+chDiscrete      = 'False';
+[status, commandOut] = CBASS_L2_PlotEmbed(cTROUGH{iBnd}, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
+    chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
 
-% Sets reference channels
-inRefChan       = 5;
+disp('Plotting embedding')
+in1EmbedLabel   = sFREQ_BAND(iBnd).db1Score';
+chLabelTag      = ['probTrough_legend_'  sOPTION.cSTATE_LBL{iBnd}];
+chFormatImg     = 'eps';
+chRotate3D      = 'False';
+chAddLegend     = 'True';
+inFontSize      = '12';
+chDiscrete      = 'False';
+[status, commandOut] = CBASS_L2_PlotEmbed(cTROUGH{iBnd}, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
+    chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
 
-% Sets methods for the construction of the adjacency matrix
-cMETHOD     = {'FixedThreshold', 'PerNodeThreshold'};
-in1Method   = [1];% 2];
-
-% Sets clustering options
-blUseRate   = false;
-inNClu      = 20;
-%% Calculates filters sets for beta and gamma
-for iBnd = 1:inNBnd
-    % Sets label
-    chLabel         = cBAND_LABEL{iBnd};
-    if strcmp(cBAND_LABEL{iBnd},'Beta')
-        db1Band       = [15 30];
-    elseif strcmp(cBAND_LABEL{iBnd},'Gamma')
-        db1Band       = [30 80];
-    end
-    
-    % Sets state
-    if strcmp(cSTATE_LBL{iBnd}, 'Stim')
-        bl1State      = sREC.bl1Pres;
-    elseif strcmp(cSTATE_LBL{iBnd}, 'Running')
-        bl1State      = sREC.bl1Run;
-    end
-    
-    % START PROCESSING ------------------------------------------------
-    % Computes the trough
-    sTROUGH     = CBASS_L1_GetTrough(sREC.db2LFP, sREC.inSampleRate, db1Band, inRefChan, chLabel, chDataFormat);
-    sTRGH_RND   = CBASS_L1_GetTrough(sREC.db2LFP_Rnd, sREC.inSampleRate, db1Band, inRefChan, chLabel, chDataFormat);
-    
-    for iMth = in1Method
+disp('Plotting embedding')
+in1EmbedLabel   = sFREQ_BAND(iBnd).bl1Partition';
+chLabelTag      = ['partition_'  sOPTION.cSTATE_LBL{iBnd}];
+chFormatImg     = 'png';
+chRotate3D      = 'False';
+chAddLegend     = 'False';
+inFontSize      = '12';
+chDiscrete      = 'False';
+[status, commandOut] = CBASS_L2_PlotEmbed(cTROUGH{iBnd}, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
+    chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
         
-        %         % Identifies enriched regions
-        %         sFILTER     = CBASS_L2_GetFitlters(sREC, sTROUGH, sTRGH_RND, cSTATE{iBnd}, blZScore, iMth, inNClu); %Original
         
-        [sFILTER, sCLU, in1CluKM, in1Sel] = CBASS_L2_GetFitlters(sREC, sTROUGH, sTRGH_RND, bl1State, blZScore, iMth, inNClu);
-        if isempty(sFILTER), sprintf('No Filter for %s %s Method %s', chExperiment, cBAND_LABEL{iBnd}, iMth); continue; end
-        inNFlt      = length(sFILTER);
-        cFLT_LBL    = cellfun(@(x) sprintf('Filter %d', x), num2cell(1:inNFlt), 'UniformOutput', false);
-        
-        chExpLabel      = [chExperiment '_' chLabel '_' chDataFormat '_' chZFlag];
-        
-        disp('Embedding...')
-        [status, commandOut] = CBASS_L2_Embed(sTROUGH, chTmpPath, chOutPath, chExpLabel, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component)
-        
-        %         % Generates the embeding plots for running and not running
-        %         disp('Plotting embedding')
-        %         in1EmbedLabel   = sREC.bl1Run(sTROUGH.in1Index);
-        %         chLabelTag      = 'all_regions';
-        %         [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-        %             chMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel);
-        
-        % Generates the embeding plots for running and not running
-        disp('Plotting embedding')
-        in1EmbedLabel   = sREC.bl1Run(sTROUGH.in1Index);
-        chLabelTag      = ['all_regions_'  cSTATE_LBL{iBnd}];
-        chFormatImg     = 'png';
-        chRotate3D      = 'False';
-        chAddLegend     = 'False';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        disp('Plotting embedding')
-        ratio_all_regions = NaN(size(sREC.bl1Run(sTROUGH.in1Index)));
-        for cluster_num=1:size(sCLU,2)
-            ratio_all_regions(sCLU(cluster_num).bl1Member) = sCLU(cluster_num).dbRate;
-        end
-        in1EmbedLabel   = ratio_all_regions;
-        chLabelTag      = ['enriched_'  cSTATE_LBL{iBnd}];
-        chFormatImg     = 'eps';
-        chRotate3D      = 'False';
-        chAddLegend     = 'True';
-        inFontSize      = '12';
-        chDiscrete      = 'False';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        in1EmbedLabel   = ratio_all_regions;
-        chLabelTag      = ['enriched_'  cSTATE_LBL{iBnd}];
-        chFormatImg     = 'png';
-        chRotate3D      = 'False';
-        chAddLegend     = 'False';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        in1EmbedLabel   = in1CluKM';
-        chLabelTag      = ['20Clusters' cSTATE_LBL{iBnd}];
-        chFormatImg     = 'png';
-        chRotate3D      = 'False';
-        chAddLegend     = 'False';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        chFormatImg     = 'eps';
-        chRotate3D      = 'False';
-        chAddLegend     = 'True';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        in1EmbedLabel   = sFILTER.bl1Member';
-        chLabelTag      = ['SigClusters' cSTATE_LBL{iBnd}];
-        chFormatImg     = 'eps';
-        chRotate3D      = 'False';
-        chAddLegend     = 'True';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-        
-        chFormatImg     = 'png';
-        chRotate3D      = 'False';
-        chAddLegend     = 'False';
-        inFontSize      = '12';
-        chDiscrete      = 'True';
-        [status, commandOut] = CBASS_L2_PlotEmbed(sTROUGH, chTmpPath, chOutPath, chExpLabel, chLabelTag, ...
-            chEmbedMethod, chDataFormat, blZScore, inN_Component, in1EmbedLabel, chFormatImg, chRotate3D, chAddLegend, inFontSize, chDiscrete);
-    end
-    close all
-end
+%% Saves the ouput structure
+% save(fullfile(chOutPath, chOutFile), 'sFREQ_BAND', '-v7.3');%% Script to plot Figure 1 of the paper
+% This script exemplifies how to process and plot the Figure 1 (methods).

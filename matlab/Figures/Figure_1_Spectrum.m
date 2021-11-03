@@ -9,7 +9,7 @@ addpath(genpath(chCBASSDir)); %Add the root folder to current folder
 % chDataDir   = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/data';
 chDataDir   = 'D:\gamma_bouts\';
 cEXP        = {'Example_1', 'Example_2'};
-iExp        = 2;
+iExp        = 1;
 chDataPath  = fullfile(chDataDir, cEXP{iExp});
 
 %Sets the output path
@@ -34,11 +34,6 @@ chDataFormat    = 'complex';
 blZScore        = true;
 inRefChan       = 5;
 
-% Sets parameters for plotting the trough
-in1StateON  = find(~bl1State(1:end - 1) & bl1State(2:end));
-inAnchor    = in1StateON(2) - (0.2 * sREC.inSampleRate);
-db1WinSec   = [0 .6];
-
 % Sets the gloabal label for the experiment;
 chExpLbl    = [cEXP{iExp} '_' chLabel];
 
@@ -57,5 +52,5 @@ xlim([0 120])
 title([chLabel ' Power vs ' chStateLabel]);
 
 %% Saves the figure
-CBASS_SaveFig(chOutPath, hFIG, cFIG_NAME);
+CBASS_SaveFig(chOutPath, hFIG, cFIG_NAME, 'png');
 close all;

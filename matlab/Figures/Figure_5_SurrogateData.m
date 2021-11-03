@@ -9,12 +9,12 @@ addpath(genpath(chCBASSDir)); %Add the root folder to current folder
 % chDataDir   = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/data';
 chDataDir   = 'D:\gamma_bouts\';
 cEXP        = {'Example_1', 'Example_2'};
-iExp        = 2;
+iExp        = 1;
 chDataPath  = fullfile(chDataDir, cEXP{iExp});
 
 %Sets the output path
 chOutDir    = 'D:\CBASS\matlab\Figures';
-chOutPath   = fullfile(chOutDir,  'Figure_8_SurrogateData');
+chOutPath   = fullfile(chOutDir,  'Figure_5_SurrogateData');
 
 %Create output folder if doens't exist
 if ~exist(chOutPath, 'dir'), mkdir(chOutPath), end
@@ -24,13 +24,13 @@ sREC    = CBASS_L0_LoadData(chDataPath);
 sREC    = CBASS_L1_AddPhaseRandomizedSignal(sREC);
 %% Test the method of surrogate data of different size.
 % Set LFP and surrogate exemple 
-inAnchor    = 40 * sREC.inSampleRate;
+inAnchor    = 50 * sREC.inSampleRate;
 db1WinSec   = [0 6];
 
 % Plots the figure
 clear hFIG
 hFIG = figure('Position', [50 50 1250 600]);
-chFigName = chExperiment;
+chFigName =  cEXP{iExp};
 
 % Plots the exemples
 subplot(2, 2, 1); 
@@ -46,4 +46,4 @@ hPLT(1) = subplot(2, 2, 3);  CBASS_Plot_LFP_FourierPower(sREC.db2LFP, sREC.inSam
 hPLT(2) = subplot(2, 2, 4);  CBASS_Plot_LFP_FourierPower(sREC.db2LFP_Rnd, sREC.inSampleRate, true)
 linkaxes(hPLT, 'y');
 
-CBASS_SaveFig(chOutPath, hFIG, {chFigName});
+CBASS_SaveFig(chOutPath, hFIG, {chFigName}, 'png');

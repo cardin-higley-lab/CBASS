@@ -9,7 +9,7 @@ addpath(genpath(chCBASSDir)); %Add the root folder to current folder
 % chDataDir   = '/gpfs/ysm/home/ahf38/Documents/gamma_bouts/data';
 chDataDir   = 'D:\gamma_bouts\';
 cEXP        = {'Example_1', 'Example_2'};
-iExp        = 2;
+iExp        = 1;
 chDataPath  = fullfile(chDataDir, cEXP{iExp});
 
 %Sets the output path
@@ -24,10 +24,10 @@ sREC    = CBASS_L0_LoadData(chDataPath);
 % sREC    = CBASS_L1_AddPhaseRandomizedSignal(sREC);
 %% Sets general parameter
 % Sets the band and the state of interest
-chLabel         = 'Beta';
-db1Band         = [15 30];
-bl1State        = sREC.bl1Pres;
-chStateLabel    = 'Stim';
+chLabel         = 'Gamma';
+db1Band         = [30 80];
+bl1State        = sREC.bl1Run;
+chStateLabel    = 'Running';
 
 % Sets options for trough extraction
 chDataFormat    = 'complex';
@@ -35,16 +35,15 @@ blZScore        = true;
 inRefChan       = 5;
 
 % Sets parameters for plotting the trough
-in1StimON   = find(~bl1State(1:end - 1) & bl1State(2:end));
-inAnchor    = in1StimON(2) - (0.2 * sREC.inSampleRate);
-db1WinSec   = [0 .6];
+in1StateON   = find(~bl1State(1:end - 1) & bl1State(2:end));
+inAnchor    = in1StateON(2) - (0.2 * sREC.inSampleRate);
+db1WinSec   = [0 1] * 10 / median(db1Band);
 
 % Sets the gloabal label for the experiment;
-chExpLbl    = [chExperiment '_' chLabel];
+chExpLbl    = [cEXP{iExp} '_' chLabel];
 
 % Gets the troughs
 sTROUGH = CBASS_L1_GetTrough(sREC.db2LFP, sREC.inSampleRate, db1Band, inRefChan, chLabel, chDataFormat);
-
 %% Initializizes the figure
 clear hFIG
 hFIG = figure('Position', [50 50 1250 600]);
@@ -96,5 +95,5 @@ title('Example Trough'); ylim(db1YL), xlim(db1Time_2([1 end]));
 xlabel('Time (s)'); ylabel('Filtered LFP (mV)')
 
 %% Saves the figure
-CBASS_SaveFig(chOutPath, hFIG, cFIG_NAME);
+CBASS_SaveFig(chOutPath, hFIG, cFIG_NAME, 'png');
 close all;
