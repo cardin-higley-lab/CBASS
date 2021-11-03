@@ -59,7 +59,7 @@ blZScore        = true;
 if blZScore, chZFlag = 'ZScore'; else, chZFlag = 'Raw'; end
 
 % Sets the embeding of choice for
-chEmbedMethod   = 'pca';
+chEmbedMethod   = 'umap';
 chMethod        = chEmbedMethod;
 inN_Component   = 2;
 iBnd=1;
