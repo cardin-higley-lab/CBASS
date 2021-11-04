@@ -26,8 +26,8 @@ The method has been developed with [Python 3.9.7](https://www.python.org/downloa
 ## Getting started
 ### Matlab
 1. Make a copy of the CBASS directory and it to your Matlab path   `addpath(genpath( path_to_CBASS ))`.
-2. The function *CBASS_Main_DetectEvents* encapsulate the whole pipeline. A Demonstration of how to run *CBASS_Main_DetectEvents* can be found in the demo script *CBASS_Call_Main__Template.m* in the [Demo](https://github.com/cardin-higley-lab/CBASS/edit/master/matlab/Demo) folder. Make a copy of this script and modify it to load your data and reflect your local path.
-3. The source code for *CBASS_Main_DetectEvents* can be found in the [Pipeline](https://github.com/cardin-higley-lab/CBASS/edit/master/matlab/Pipeline) folder. The help section gives a detailed description its input, output and of the sufunctions implementing the different levels of the pipeline. Subfunctions also have a detailed help. Read and hack as needed.
+2. The function *CBASS_Main_DetectEvents* encapsulate the whole pipeline. A Demonstration of how to run *CBASS_Main_DetectEvents* can be found in the demo script *CBASS_Call_Main__Template.m* in the [Demo](https://github.com/cardin-higley-lab/CBASS/tree/main/matlab/Demo) folder. Make a copy of this script and modify it to load your data and reflect your local path.
+3. The source code for *CBASS_Main_DetectEvents* can be found in the [Pipeline](https://github.com/cardin-higley-lab/CBASS/tree/main/matlab/Pipeline) folder. The help section gives a detailed description its input, output and of the sufunctions implementing the different levels of the pipeline. Subfunctions also have a detailed help. Read and hack as needed.
 ### Python
 Install the packages listed in the Conda enviroment description [below](#Create-your-own-Conda-environment). We recommend the use of [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) for iteractive use. Check JupyterLab's documentation for installation and quickstart instructions.
 
