@@ -3,8 +3,6 @@ CBASS (Clustering Band-limited Activity by State and Spectro-temporal features)
 
 .. currentmodule:: method_description
 
-**Warning**: Equations will not be visible on a dark background.
-
 LFP power often increases in a specific frequency band during specific events or behavioral states. For example, in the visual cortex of mouse, beta (15-30Hz) increases during visual stimulation while gamma (30-80Hz) increases during running (Fig. 1). 
 
 .. image:: ../matlab/Figures/Figure_1_Spectrum/Example_1_Gamma.png
@@ -22,7 +20,7 @@ The method can be divided into 3 steps:
 Extraction
 =================
 
-The first step of CBASS extracts candidate network events in the selected frequency band and represents them in a parametric space. Each channel of the LFP (Fig. 2 left) is band-pass filtered in the frequency band of interest (Fig. 2 center). In our case, we used zero-phase digital filtering with a 2nd order Butterworth filter (Matlab functions ``filtfilt`` and ``butter`` or their corresponding functions in the Scipy package). Then, we compute the analytical representation of the filtered signal (Matlab function ``hilbert`` or the corresponding function in Scipy). The analytic representation of a real signal :math:`s(t)` is a complex sequence :math:`s_a(t)` given by :math:`s_{a}(t) = s(t) *2B i*H[s(t)]`
+The first step of CBASS extracts candidate network events in the selected frequency band and represents them in a parametric space. Each channel of the LFP (Fig. 2 left) is band-pass filtered in the frequency band of interest (Fig. 2 center). In our case, we used zero-phase digital filtering with a 2nd order Butterworth filter (Matlab functions ``filtfilt`` and ``butter`` or their corresponding functions in the Scipy package). Then, we compute the analytical representation of the filtered signal (Matlab function ``hilbert`` or the corresponding function in Scipy). The analytic representation of a real signal :math:`s(t)` is a complex sequence :math:`s_a(t)` given by :math:`s_{a}(t) = s(t) + iH[s(t)]`
 
 
 where :math:`H[s(t)]` is the Hilbert transform of :math:`s(t)`. Thus, the real part of the analytical signal is the signal itself and its imaginary part is given by its Hilbert transform. For a band limited time series like the filtered LFP, :math:`s(t)` has the very useful properties that its norm and complex argument respectively correspond to the instantaneous amplitude envelope and instantaneous phase of :math:`s(t)` (the norm can be computed with the Matlab function ``abs`` and the complex argument with the function ``angle``. Corresponding functions can be found in the Numpy package). Thus, the analytical signal gives a rich representation of LFP activity at the band of interest and eliminates frequency redundancy problems related to the Fourier transform [1].
