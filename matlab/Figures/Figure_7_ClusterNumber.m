@@ -53,7 +53,7 @@ db1Threshold        = nan(size(in1NClu));
 
 % Initializes the first figure
 clear hFIG cFIG_NAME
-hFIG(1) = figure('Position', [50 50 1250 600]);
+hFIG(1) = figure('Position', [50 50 900 500]);
 cFIG_NAME{1} = [chExpLbl '_CSD_Score_Overlap'];
 
 % Loops through the number of cluster

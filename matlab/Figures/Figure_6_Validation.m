@@ -38,7 +38,7 @@ sFREQ_BAND = CBASS_Main_DetectEvents(sREC.db2LFP, sREC.inSampleRate, cBAND, cSTA
 
 %% Plots the figure
 clear hFIG
-hFIG = figure('Position', [50 50 1250 600]);
+hFIG = figure('Position', [50 50 900 500]);
 cFIG_NAME = {[cEXP{iExp} '_' sOPTION.cSTATE_LBL{1}]};
 
 % Plots CSD 

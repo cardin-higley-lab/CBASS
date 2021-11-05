@@ -29,7 +29,7 @@ db1WinSec   = [0 6];
 
 % Plots the figure
 clear hFIG
-hFIG = figure('Position', [50 50 1250 600]);
+hFIG = figure('Position', [50 50 900 500]);
 chFigName =  cEXP{iExp};
 
 % Plots the exemples
@@ -47,3 +47,4 @@ hPLT(2) = subplot(2, 2, 4);  CBASS_Plot_LFP_FourierPower(sREC.db2LFP_Rnd, sREC.i
 linkaxes(hPLT, 'y');
 
 CBASS_SaveFig(chOutPath, hFIG, {chFigName}, 'png');
+close all

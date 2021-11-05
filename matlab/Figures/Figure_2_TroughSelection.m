@@ -46,7 +46,7 @@ chExpLbl    = [cEXP{iExp} '_' chLabel];
 sTROUGH = CBASS_L1_GetTrough(sREC.db2LFP, sREC.inSampleRate, db1Band, inRefChan, chLabel, chDataFormat);
 %% Initializizes the figure
 clear hFIG
-hFIG = figure('Position', [50 50 1250 600]);
+hFIG = figure('Position', [50 50 900 500]);
 cFIG_NAME = {chExpLbl};
 
 % Plots the pulse triggerred averages

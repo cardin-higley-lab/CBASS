@@ -41,11 +41,11 @@ chExpLbl    = [cEXP{iExp} '_' chLabel];
 sTROUGH = CBASS_L1_GetTrough(sREC.db2LFP, sREC.inSampleRate, db1Band, inRefChan, chLabel, chDataFormat);
 %% Initializizes the figure
 clear hFIG
-hFIG = figure('Position', [50 50 1250 600]);
+hFIG = figure('Position', [50 50 900 500]);
 cFIG_NAME = {chExpLbl};
 
 % Plots the spectrum
-CBASS_Plot_LFP_FourierPower(sREC.db2LFP, sREC.inSampleRate, false, bl1State); hold on
+CBASS_Plot_LFP_FourierPower(sREC.db2LFP, sREC.inSampleRate, false, bl1State, {'Quiet' chStateLabel}); hold on
 legend('AutoUpdate', 'off');
 db1YL = ylim; plot(db1Band(1) * [1 1], db1YL, '--r'); plot(db1Band(2) * [1 1], db1YL, '--r');
 xlim([0 120])
