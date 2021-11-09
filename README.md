@@ -21,7 +21,7 @@ The example data can be downloaded from OSF [here](https://osf.io/3k7a5/?view_on
 ### Matlab 
 The method has been developed primarily in Matlab 2018b. It should work on any posterior version. Matlab can be downloaded [here](https://www.mathworks.com/products/matlab.html).
 ### Python 
-The method has been developed with [Python 3.9.7](https://www.python.org/downloads/), but the current CBASS implementation has been tested with Python versions 3.7 or newer. For easier setup, we strongly recommend the use of [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html) to manage packages. For instrcutions on how to setup the conda enviroment, see the [instructions](#setting-up-conda-environment-for-optional-plot) below.
+The method has been developed with [Python 3.9.7](https://www.python.org/downloads/), but the current CBASS implementation has been tested with Python versions 3.7 or newer. For easier setup, we strongly recommend the use of [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html) to manage packages. For instructions on how to setup the conda enviroment, see the [instructions](#setting-up-conda-environment-for-optional-plot) below.
 
 ## Getting started
 ### Matlab
