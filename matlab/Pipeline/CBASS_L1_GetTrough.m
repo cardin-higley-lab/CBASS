@@ -48,19 +48,15 @@ if ~ismember(chDataFormat, {'polar', 'complex'})
     chDataFormat = 'complex';
 end
 
-% Filters the LFP
+%Fitlers LFP one channel at a time in order not to overload memory                 
 [B, A] = butter(2, 2 * db1FilterBand / inSampleRate);
-db2_Filt_LFP = filtfilt(B, A, db2LFP'); %The LFP is transposed because filtfilt and hilbert opperates over rows
-
-% Uses the Hilbert Transform
-db2_Hilbert = hilbert(db2_Filt_LFP);
-
-% Computes the amplitude and the phase
-db1_Amp     = abs(db2_Hilbert);
-db1_Phase   = angle(db2_Hilbert);
+db2_Hilbert = zeros(size(db2LFP))';
+for iChan = 1:size(db2_Hilbert, 2)                                                                                          
+    db2_Hilbert(:, iChan) = hilbert(filtfilt(B, A, db2LFP(iChan, :)'));                                                 
+end
 
 % Finds the indices of troughs on the reference channels
-bl1RefTrough = db1_Phase(1:end-1, inRefChan) > 0 & db1_Phase(2:end, inRefChan) < 0;
+bl1RefTrough = angle(db2_Hilbert(1:end-1, inRefChan)) > 0 & angle(db2_Hilbert(2:end, inRefChan)) < 0;
 
 if strcmp(chDataFormat, 'complex')
     % Format the troughs so that each row is a motif and col 1:15 is the
@@ -72,7 +68,7 @@ else
     % is at the trough of the oscillation) and that col 1:15 correspond to
     % the amplitude of each channel and col 16:30 correspond to the phase.
     % Note these two groups should be normalized separately
-    db2Trough       = [db1_Amp(bl1RefTrough, :) db1_Phase(bl1RefTrough, :)];
+    db2Trough       = [abs(db2_Hilbert(bl1RefTrough, :)) angle(db2_Hilbert(bl1RefTrough, :))];
 end
 
 % Store the output
