@@ -261,9 +261,9 @@ def CheckOption(sOPTION, cBAND, cSTATE, inNChan): #, bl1Remove):
         print('sOPTION.chDataFormat is not valid. Setting to default\r')
         sOPTION.chDataFormat = ['complex' for iBnd in range(len(cBAND))] 
         
-    if (not hasattr(sOPTION, 'inRefChan') or not isinstance(sOPTION.inRefChan, int)): 
-        print('sOPTION.inRefChan is not valid. Setting to default\r')
-        sOPTION.inRefChan = inNChan
+    if (not hasattr(sOPTION, 'inRefChan'): #or not isinstance(sOPTION.inRefChan, int)): 
+        print(f'sOPTION.inRefChan is set to {sOPTION.inRefChan} which is not valid. Setting to default\r')
+        sOPTION.inRefChan = inNChan - 1
 
     # Checks L2 options for the computation of filters
         # Checks baseline option argument
