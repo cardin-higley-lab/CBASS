@@ -4,14 +4,14 @@
 ![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue)
 ![Matlab Versions](https://img.shields.io/badge/MATLAB-2018%7C2019%7C2020-blue.svg?style=flat-square)
 
-__*NEWS (05-2025):*__ The repository now includes a jupyter notebook showing how to run CBASS on __Neuropixel Data from the Allen Brain observatory__ [`CBASS_demo_AllenSDK.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo_AllenSDK.ipynb)
+__*NEWS (05-2025):*__ The repository now includes a jupyter notebook showing how to run CBASS on __Neuropixel Data from the Allen Brain Observatory__ [`CBASS_demo_AllenSDK.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo_AllenSDK.ipynb)
 
 __CBASS__ stands for _**C**lustering **B**and-limited **A**ctivity by **S**tate and **S**pectro-temporal features_. It is a method designed to detect recurring spatio-temporal motifs in multi-channel time series. Motifs must have energy in a specified frequency band and their occurence must increase during specific epochs of the recording (i.e. state). The method was originally developed to analyze multichannel Local Field Potentials but can be applied to any time series in principle. A detailed description of the algorithm can be found in the [wiki](https://github.com/cardin-higley-lab/CBASS/wiki)
 
 
 ## Code organization
 CBASS is implemented in Matlab and Python. Each implementation is contained in a dedicated folder. The code is organized similarly for both and is subdived in 2 main folders:
-1. ***Demo*** contains script showing exemples of how to run CBASS. These scripts are meant to be edited and modified to the convenience of the user. For the python implementation, the demo is presented in the form of a Jupyter notebooks: 1. One notebook demonstrate CBASS on our own dowloadable test data [`CBASS_demo.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo.ipynb) 2. A second notebook shows how to run CBASS on __Neuropixel Data from the Allen Brain observatory__ [`CBASS_demo_AllenSDK.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo_AllenSDK.ipynb)
+1. ***Demo*** contains script showing exemples of how to run CBASS. These scripts are meant to be edited and modified to the convenience of the user. For the python implementation, the demo is presented in the form of a Jupyter notebooks: 1. One notebook demonstrate CBASS on our own dowloadable test data [`CBASS_demo.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo.ipynb) 2. A second notebook shows how to run CBASS on __Neuropixel Data from the Allen Brain Observatory__ [`CBASS_demo_AllenSDK.ipynb`](https://github.com/cardin-higley-lab/CBASS/blob/main/python/CBASS_demo_AllenSDK.ipynb)
 2. ***Pipeline*** contains the core functions implementing CBASS as well as a number of utilities. This part of the code is meant to be copied and edited by users wishing to modify the method or reuse some of its part.
 
 The matlab implementation has an additional folder ***Figures*** containing scripts generating the figures shown in the [wiki](https://github.com/cardin-higley-lab/CBASS/wiki). These script operate on test data that can be downloaded [here](https://osf.io/3k7a5/?view_only=bbcb6ac653d041fab0bd1618301cab30).
